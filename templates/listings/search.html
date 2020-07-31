@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
-{% load static %}
 {% load humanize %}
+
+{% block title %} | Search Results {% endblock %}
 
 {% block content %}
 <section id="showcase-inner" class="showcase-search text-white py-5">
@@ -18,20 +19,19 @@
 
               <div class="col-md-4 mb-3">
                 <label class="sr-only">City</label>
-                <input type="text" name="city" class="form-control" placeholder="City" value="{{ values.city}}">
+                <input type="text" name="city" class="form-control" placeholder="City" value="{{ values.city }}">
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="sr-only">State</label>
                 <select name="state" class="form-control">
                   <option selected="true" disabled="disabled">State (All)</option>
-                    {% for key,value in state_choices.items %}
-                      <option 
-                        value = "{{ key }}"
-                        {% if key == values.state %}
-                            selected
-                        {% endif %}
-                      >{{ value }} </option>
+                  {% for key,value in state_choices.items %}
+                      <option value="{{ key }}" 
+                      {% if key == values.state %}
+                        selected
+                      {% endif %}
+                      >{{ value }}</option>
                     {% endfor %}
                 </select>
               </div>
@@ -40,28 +40,26 @@
             <div class="form-row">
               <div class="col-md-6 mb-3">
                 <label class="sr-only">Bedrooms</label>
-                <select name="bedrooms" class="form-control" value="{{ values.bedrooms}}">
+                <select name="bedrooms" class="form-control">
                   <option selected="true" disabled="disabled">Bedrooms (Any)</option>
-                    {% for key,value in bedroom_choices.items %}
-                      <option 
-                        value = "{{ key }}"
-                        {% if key == values.bedrooms %}
-                            selected
-                        {% endif %}
-                      >{{ value }} </option>
+                  {% for key,value in bedroom_choices.items %}
+                      <option value="{{ key }}"
+                      {% if key == values.bedrooms %}
+                        selected
+                      {% endif %}
+                      >{{ value }}</option>
                     {% endfor %}
                 </select>
               </div>
               <div class="col-md-6 mb-3">
-                <select name="price" class="form-control" value="{{ values.price}}">
+                <select name="price" class="form-control">
                   <option selected="true" disabled="disabled">Max Price (All)</option>
                   {% for key,value in price_choices.items %}
-                      <option 
-                        value = "{{ key }}"
-                        {% if key == values.price %}
-                            selected
-                        {% endif %}
-                      >{{ value }} </option>
+                      <option value="{{ key }}"
+                      {% if key == values.price %}
+                        selected
+                      {% endif %}
+                      >{{ value }}</option>
                     {% endfor %}
                 </select>
               </div>
@@ -83,7 +81,7 @@
               <i class="fas fa-home"></i> Home</a>
           </li>
           <li class="breadcrumb-item">
-            <a href="{% url 'listings' %">Browse Listings</a>
+            <a href="{% url 'listings' %}">Browse Listings</a>
           </li>
           <li class="breadcrumb-item active"> Search Results</li>
         </ol>
@@ -95,10 +93,9 @@
   <section id="listings" class="py-4">
     <div class="container">
       <div class="row">
-
         {% if listings %}
           {% for listing in listings %}
-            <div class="col-md-6 col-lg-4 mb-4">
+          <div class="col-md-6 col-lg-4 mb-4">
               <div class="card listing-preview">
                 <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="">
                 <div class="card-img-overlay">
@@ -132,7 +129,7 @@
                   </div>
                   <div class="row text-secondary pb-2">
                     <div class="col-6">
-                      <i class="fas fa-clock"></i> {{ listing.list_date | timesince }} days ago</div>
+                      <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}</div>
                   </div>
                   <hr>
                   <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a>
@@ -141,11 +138,11 @@
             </div>
           {% endfor %}
         {% else %}
-          <div class="col-md-12">No Listings to display</div>
+          <div class="col-md-12">
+            <p>No Listings Available</p>
+          </div>
         {% endif %}
-
       </div>
     </div>
   </section>
-
   {% endblock %}
